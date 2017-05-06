@@ -191,8 +191,10 @@ const renderPostureInfo = () => {
 	currentPostureObj.postureInfo.forEach(function(item, index) {
 		
 		const count = getVinyasa(index, currentPostureObj.postureInfo.length);
+
+		// ${item}
 		
-		infoHtml.find('.vinyasa').append(`<li><span>${count}: </span>${item}</li>`);
+		infoHtml.find('.vinyasa').append(`<li><img src="img/anna.png"><div class="vinyasa-info"><span>${count}</span></span>Inhale</span></div></li>`);
 	})
 
 }
@@ -304,20 +306,20 @@ $(function() {
 
 /* TODO
 
-	HOW TO SCROLL LONG LIST LEFT
 	TIDY UP CSS
 	TIDY UP HTML
 	TIDY UP AND RE ARRANGE FUNCTIONS
 	LOOK FOR WHERE I CAN USE MAP INSTEAD OF FOREACH
 	RESPONSIVE
 	CREATE LIGHTBOX
+	GIT RID OF QUEUES (USE COUNT AND BREATH)
 
 */
 
 /* IDEAS TO IMPROVE
 
 	Build functionality to exclude ceratin tags from unique posture results - flickr functionality broken
-	build functionality to favor photos tagged samasthiti.me
 	Loading animation / icon for images
+	change list of cues to boxes with breath and count background is picture of Anna, show cue on click
 
 */

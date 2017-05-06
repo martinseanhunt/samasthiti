@@ -15,8 +15,6 @@ body{
 	font-size: 12px;
 	font-weight: light;
 	line-height: 16px;
-	margin-top: 215px;
-	margin-bottom: 59px;
 }
 
 .leftcol{
@@ -29,18 +27,9 @@ body{
 	font-weight: 300;
 }
 
-.leftcol .leftcol-inner{
-	height: 100%;
-	overflow: scroll;
-}
-
 .leftcol header{
 	background: #f9f8f4;
 	text-align: center;
-	position: fixed;
-	top: 0;
-	left: 0; 
-	width: 30%;
 }
 
 .leftcol header h1{
@@ -68,7 +57,7 @@ body{
 .leftcol h2{
 	font-size: 12px;
 	text-transform: uppercase;
-	margin: 25px 0 10px 0;
+	margin: 20px 0 10px 0;
 	color: #A7DBD8;
 }
 
@@ -79,6 +68,8 @@ ul.vinyasa{
 	margin: 0;
 	padding: 0;
 	overflow: scroll;
+	margin-top: 10px;
+	font-size: 0;
 }
 
 
@@ -89,8 +80,48 @@ ul.vinyasa li span{
 }
 
 ul.vinyasa li{
-	padding: 10px 0;
-	border-bottom: 1px solid #fcfbf8;
+	display: inline-block;
+	width: 49%;
+	position: relative;
+	border: 1px solid #fff;
+	cursor: pointer;
+	overflow: hidden;
+
+	/*/ use opacity: */
+	background: rgba(167, 219, 216, 0.5);
+}
+
+ul.vinyasa li:hover img{
+	opacity: 1;
+	-webkit-filter: blur(0);
+}
+
+ul.vinyasa li .vinyasa-info{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	text-align: center;
+	color: #fff;
+	font-size: 24px;
+	line-height: 24px;
+}
+
+ul.vinyasa li .vinyasa-info span{
+	display: block;
+	color: #fff;
+	font-weight: 700;
+}
+
+ul.vinyasa li img{
+	width: 100%;
+	opacity: 0.3;
+	display: block;
+	-webkit-filter: blur(1px);
+}
+
+ul.vinyasa li:nth-child(even){
+	margin-left: 2%;
 }
 
 nav ul{
@@ -187,12 +218,6 @@ nav ul li a:hover{
 .buttons{
 	text-align: center;
 	width: 100%;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 30%;
-	background: #f9f8f4;
-	padding: 20px 0;
 }
 
 .button{
@@ -202,7 +227,7 @@ nav ul li a:hover{
 	color: #fff;
 	text-decoration: none;
 	text-transform: uppercase;
-	width: 40%;
+	width: 44%;
 }
 
 .prev{
@@ -211,4 +236,30 @@ nav ul li a:hover{
 
 .button:hover{
 	background: #141414;
+}
+
+.leftcol{
+	overflow: scroll;
+}
+
+.leftcol header{
+	position: fixed;
+	top: 0;
+	left: 0; 
+	width: 30%;
+	z-index: 999;
+}
+
+.buttons{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 30%;
+	background: #f9f8f4;
+	padding: 20px 0;
+}
+
+.home, .posture-info{
+	margin-top: 215px;
+	margin-bottom: 59px;
 }
