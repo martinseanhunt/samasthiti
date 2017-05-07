@@ -75,7 +75,7 @@ ul.vinyasa{
 
 ul.vinyasa li{
 	display: inline-block;
-	width: 49%;
+	width: 100%;
 	position: relative;
 	border: 1px solid #fff;
 	cursor: pointer;
@@ -124,9 +124,7 @@ ul.vinyasa li img{
 	-webkit-filter: blur(1px);
 }
 
-ul.vinyasa li:nth-child(even){
-	margin-left: 2%;
-}
+
 
 nav ul{
 	list-style: none;
@@ -277,7 +275,7 @@ nav ul li a:hover{
 .lightbox{
 	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, 0.7);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -304,4 +302,25 @@ nav ul li a:hover{
 .lightbox-content img{
 	display: block;
 	max-width: 100%;
+}
+
+
+@media only screen and (min-width: 640px) {
+
+}
+
+@media only screen and (min-width: 800px) {
+
+  
+}
+
+@media only screen and (min-width: 1159px) {
+	ul.vinyasa li{
+		display: inline-block;
+		width: 49%;
+ 	}
+
+ 	ul.vinyasa li:nth-child(even){
+	margin-left: 2%;
+}
 }
