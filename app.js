@@ -14,12 +14,14 @@ let state = {
 		{
 			name: 'Surya Namaskar A',
 			vinyasaCount: 9,
+			vinyasaPhotos: ['anna.png','anna.png','anna.png','anna.png','anna.png','anna.png','surya-a-sat.png','anna.png','anna.png','anna.png',],
 			search: 'samasthiti, surya+Namaskar+a, sun+salutation+a, Uttanasana, Ardha+Uttanasana, downward+facing+dog, aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh',
 			photos: [],
 		},
 		{
 			name: 'Surya Namaskar B',
 			vinyasaCount: 17,
+			vinyasaPhotos: ['anna.png','anna.png','anna.png','anna.png','anna.png','anna.png','surya-a-sat.png','anna.png','anna.png','anna.png','surya-a-sat.png','anna.png','anna.png','anna.png','surya-a-sat.png','anna.png','anna.png','anna.png',],
 			search: 'samasthiti, surya+Namaskar+b, sun+salutation+b, Uttanasana, Ardha+Uttanasana, downward+facing+dog, aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh, virabhadrasana, virabhadrasanaa, virabhadrasana+a, warrior+1, warrior1',
 			photos: [],
 		}
@@ -59,6 +61,10 @@ const getPosture = (state, postureId) => {
 const getVinyasaCount = (state, postureId) => {
 	// IS IT OK TO RETURN THE WHOLE POSTURE OBJECT HERE OR SHOULD I ONLY RETURN SPECIFIC THINGS FROM THE STATE, E.G. NAME
 	return state.postures[postureId].vinyasaCount;
+}
+
+const getVinyasaImage = (state, postureId, plateCount) => {
+	return state.postures[postureId].vinyasaPhotos[plateCount];
 }
 
 //Get a posture object from state
@@ -206,8 +212,10 @@ const renderLeftCol = () => {
 				breath = 'inhale';
 			}
 		}
-		
-		infoHtml.find('.vinyasa').append(`<li><span class="count-num">${plateCount}</span><img src="img/anna.png"><div class="vinyasa-info"><span>${currentVinyasa}</span></span>${breath}</span></div></li>`);
+
+		const vinyasaImage = getVinyasaImage(state, currentPostureId, plateCount);
+
+		infoHtml.find('.vinyasa').append(`<li><span class="count-num">${plateCount}</span><img src="img/${vinyasaImage}" alt="${currentVinyasa}"><div class="vinyasa-info"><span>${currentVinyasa}</span></span>${breath}</span></div></li>`);
 	}
 
 	$('.js-posture-name').text(postureHeading);
@@ -232,6 +240,7 @@ const populateHomePage = () => {
 }
 
 const goToTop = () => {
+	// **** THIS ISN'T WORKING.... WHAT DO? **** //
 	window.scrollTo(0, 0);
 }
 
@@ -335,6 +344,7 @@ $(function() {
 	LOOK FOR WHERE I CAN USE MAP INSTEAD OF FOREACH
 	RESPONSIVE
 	CREATE LIGHTBOX
+	GET PREV / NEXT BUTTONS TO ALIGN PROPERLY
 
 */
 
