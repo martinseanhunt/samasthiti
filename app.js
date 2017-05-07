@@ -7,6 +7,7 @@ const DISSALLOWED_PHOTOS = ['7294540910', '31367025712', '16365532406', '3136702
 
 // SANSKRIT NUMBERS 1 TO 17 FOR USE LATER **** IS THIS THE BEST PLACE FOR THESE? ****
 const SANSKRIT_NUMBERS =['SAMASTHITI', 'EKHAM', 'DVE', 'TRINI', 'CATVARI', 'PANCHA', 'SAT', 'SAPTA', 'ASTAU', 'NAVA', 'DASA', 'EKADASA', 'DVADASA', 'TRAYODASA', 'CHATURDASA', 'PANCADASA', 'SODASA', 'SAPTADASA'];
+const SANSKRIT_PRONUNCIATIONS =['sa-ma-stee-tee', 'A-kam', 'dway', 'tree-nee', 'chat-waaree', 'pan-cha', 'shat', 'sap-ta', 'ash-tau', 'na-va', 'day-sha', 'e-ka-da-sha', 'dwa-da-sha', 'try-yo-da-sha', 'chat-uhr-da-sha', 'pan-cha-da-sha', 'show-da-sha', 'sap-ta-da-sha'];
 
 // STATE
 let state = {
@@ -154,7 +155,7 @@ const updateBackgroundImages = () => {
 		if ($.inArray(photo.id, DISSALLOWED_PHOTOS) === -1) { 
 			// finds the biggest available image
 			const biggestImg = findBiggestImg(photo);
-			imagesHTML += `<div class="image">
+			imagesHTML += `<div class="image" data-lightbox-img-url="${biggestImg}">
 								<img src="${biggestImg}" alt="${photo.title}">
 								<div class="img-data hidden">
 									<ul class="data-list">
@@ -214,8 +215,21 @@ const renderLeftCol = () => {
 		}
 
 		const vinyasaImage = getVinyasaImage(state, currentPostureId, plateCount);
+		const pronuncuation = SANSKRIT_PRONUNCIATIONS[plateCount];
 
-		infoHtml.find('.vinyasa').append(`<li><span class="count-num">${plateCount}</span><img src="img/${vinyasaImage}" alt="${currentVinyasa}"><div class="vinyasa-info"><span>${currentVinyasa}</span></span>${breath}</span></div></li>`);
+		infoHtml.find('.vinyasa').append(
+			`<li>
+				<span class="count-num">${plateCount}</span>
+				<img src="img/${vinyasaImage}" alt="${currentVinyasa}">
+				<div class="vinyasa-info">
+					<span class="vinyasa-count">${currentVinyasa}</span>
+					<span>${breath}</span>
+				</div>
+				<div class="pronuncuation hidden">
+					<span>${pronuncuation}</span>
+				</div>
+			</li>`
+		);
 	}
 
 	$('.js-posture-name').text(postureHeading);
@@ -303,21 +317,46 @@ const hideImageInfo = function() {
 }
 
 const goToPosture = function() {
-	const index = Number($(this).attr('data-posture-id'));
+	const postureId = Number($(this).attr('data-posture-id'));
 
 	renderPosturePageClasses();
-	updateCurentPostureCount(state, index);
+	updateCurentPostureCount(state, postureId);
 	selectCurrentNavLink();
 	goToTop();
 	triggerSearch();
 	renderLeftCol();
 }
 
-const renderNavLinks = () =>{
+const showPronunciation = function() {
+	console.log('this');
+	$(this).find('.vinyasa-info').toggleClass('hidden');
+	$(this).find('.pronuncuation').toggleClass('hidden');
+}
+
+
+const showLightbox = function() {
+	const postureId = getCurrentPosture(state);
+	const imgUrl = $(this).attr('data-lightbox-img-url');
+	
+	// **** AGAIN, THIS IS CHANGING THE DOM AS SOON AS I CALL LIGHTBOX.REMOVE CLASS. HOW DO I GET IT TO ONLY DO THAT ONCE I'M DONE CHANGING ALL THE DATA
+	let lightbox = $('.lightbox');
+
+	lightbox.removeClass('hidden');
+	lightbox.find('img').attr('src', imgUrl);
+}
+
+const hideLightBox = (e) => {
+	// Only hide lightbox if clicked outside image or escape key pressed
+	if( ! $(e.target).hasClass('lightbox-image' || e.keyCode === 27) ){
+		$('.lightbox').addClass('hidden');
+	}
+}
+
+const renderNavLinks = () => {
 	const postures = getAllPostures(state);
 	let navHtml = "";
 	// USE MAP
-	postures.forEach(function(posture, index){
+	postures.forEach(function(posture, index) {
 		navHtml += `<li><a href="#" class="js-nav-link js-nav-link-${index}" data-posture-id="${index}">${posture.name}</a></li>`;
 	});
 
@@ -332,19 +371,24 @@ $(function() {
 	$('.js-next').click(nextPosture);
 	$('.js-prev').click(prevPosture);
 	$('.js-nav-link').click(goToPosture);
+	$('.vinyasa').on('click', 'li', showPronunciation);
 	$('.background-images').on('mouseenter', '.image', showImageInfo);
 	$('.background-images').on('mouseleave', '.image', hideImageInfo);
+	$('.background-images').on('click', '.image', showLightbox);
+	$('.lightbox').click( function(e){ hideLightBox(e) } );
+	$(document).keyup(function(e) { hideLightBox(e); });
 });
 
 /* TODO
 
+	DO SOMETHING WHEN CLICKING PLATE
+	
+	LOOK FOR WHERE I CAN USE MAP INSTEAD OF FOREACH
+	TIDY UP AND RE ARRANGE FUNCTIONS
 	TIDY UP CSS
 	TIDY UP HTML
-	TIDY UP AND RE ARRANGE FUNCTIONS
-	LOOK FOR WHERE I CAN USE MAP INSTEAD OF FOREACH
+	
 	RESPONSIVE
-	CREATE LIGHTBOX
-	GET PREV / NEXT BUTTONS TO ALIGN PROPERLY
 
 */
 
