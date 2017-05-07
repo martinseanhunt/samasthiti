@@ -13,13 +13,13 @@ let state = {
 	postures: [
 		{
 			name: 'Surya Namaskar A',
-			postureInfo: ['Stand tall, arms by side', 'raise your arms', 'fold', 'half lift', 'step back, lower chaturanga', 'open the chest, look up upward facing dog', 'roll over your toes, downward facing dog: Hold for 5 breaths', 'step or jump forward look up', 'fold', 'raise your arms', 'lower your arms',],
+			vinyasaCount: 9,
 			search: 'samasthiti, surya+Namaskar+a, sun+salutation+a, Uttanasana, Ardha+Uttanasana, downward+facing+dog, aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh',
 			photos: [],
 		},
 		{
 			name: 'Surya Namaskar B',
-			postureInfo: ['Stand tall, arms by side', 'raise your arms', 'fold', 'half lift', 'step back, lower chaturanga', 'open the chest, look up upward facing dog', 'roll over your toes, downward facing dog: Hold for 5 breaths', 'step or jump forward look up', 'fold', 'raise your arms', 'lower your arms', 'open the chest, look up upward facing dog', 'roll over your toes, downward facing dog: Hold for 5 breaths', 'step or jump forward look up', 'fold', 'raise your arms', 'lower your arms'],
+			vinyasaCount: 17,
 			search: 'samasthiti, surya+Namaskar+b, sun+salutation+b, Uttanasana, Ardha+Uttanasana, downward+facing+dog, aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh, virabhadrasana, virabhadrasanaa, virabhadrasana+a, warrior+1, warrior1',
 			photos: [],
 		}
@@ -28,46 +28,52 @@ let state = {
 }
 
 // Add photo array from flickr to state
-const addPhotos = function addPhotoToState(state, posture, photos) {
+const addPhotos = (state, posture, photos) => {
 	state.postures[posture].photos = photos;
 }
 
 // Return current posture which is the key for the object of the posture we're on 
-const getCurrentPosture = function getCurrentPostureObj(state){
+const getCurrentPosture = (state) => {
 	return state.currentPosture;
 }
 
 //Get all postures object from state
-const getAllPostures = (state) =>{
+const getAllPostures = (state) => {
 	// IS IT OK TO RETURN THE WHOLE POSTURES OBJECT HERE OR SHOULD I ONLY RETURN SPECIFIC THINGS FROM THE STATE, E.G. NAME
 	return state.postures;
 }
 
 //Get all postures array length
-const getPosturesArrayLength= (state) =>{
+const getPosturesArrayLength= (state) => {
 	// DO I NEED TO DO THIS OR CAN I JUST USE THE FUNCTION ABOVE AND CALL LENGTH ON WHAT IT RETURNS
 	return state.postures.length;
 }
 
 //Get a posture object from state
-const getPosture = function getPostureObj(state, postureId){
+const getPosture = (state, postureId) => {
 	// IS IT OK TO RETURN THE WHOLE POSTURE OBJECT HERE OR SHOULD I ONLY RETURN SPECIFIC THINGS FROM THE STATE, E.G. NAME
 	return state.postures[postureId];
 }
 
 //Get a posture object from state
-const getPostureString = function getPostureSearchString(state, postureId){
+const getVinyasaCount = (state, postureId) => {
+	// IS IT OK TO RETURN THE WHOLE POSTURE OBJECT HERE OR SHOULD I ONLY RETURN SPECIFIC THINGS FROM THE STATE, E.G. NAME
+	return state.postures[postureId].vinyasaCount;
+}
+
+//Get a posture object from state
+const getPostureString = (state, postureId) => {
 	// IS IT OK TO RETURN THE WHOLE POSTURE OBJECT HERE OR SHOULD I ONLY RETURN SPECIFIC THINGS FROM THE STATE, E.G. NAME
 	return state.postures[postureId].search;
 }
 
 // Return current posture which is the key for the object of the posture we're on 
-const getPosturePhotos = function getPostureImages(state, posture){
+const getPosturePhotos = (state, posture) => {
 	return state.postures[posture].photos;
 }
 
 // Update current posture count
-const updateCurentPostureCount = function updateCounter(state, count){
+const updateCurentPostureCount = (state, count) => {
 	return state.currentPosture = count;
 }
 
@@ -91,7 +97,7 @@ const searchFlickr = (q, callBack) => {
 }
 
 // Flickr callback for photo search
-const processPhotos = function processPhotos(data) {
+const processPhotos = (data) => {
 	// Sending photos array to be added to state
 	const currentPostureId = getCurrentPosture(state);
 	addPhotos(state, currentPostureId, data.photos.photo);
@@ -100,7 +106,7 @@ const processPhotos = function processPhotos(data) {
 	updateBackgroundImages();
 }
 
-const findBiggestImg = function returnBiggestAvailableImg(photo) {
+const findBiggestImg = (photo) => {
 	// checks for available images to see which is the biggeset and returns it
 
 	const lettersArray = ['z', 'n', 'm', 'q', 't', 's'];
@@ -118,25 +124,24 @@ const findBiggestImg = function returnBiggestAvailableImg(photo) {
 }
 
 // Set background image to current posture photos
-const updateBackgroundImages = function setBgImg() {
+const updateBackgroundImages = () => {
 	// get original size image
 	const currentPostureId = getCurrentPosture(state);
 	const currentPosturePhotos = getPosturePhotos(state, currentPostureId);
 
 	// Shuffle array to randomize photo order  REDO THIS IN OWN STYLE
-	let i = 0
-		, j = 0
-	    , temp = null;
+	let i = 0;
+	let j = 0;
+	let temp = null;
 
-	for (i = currentPosturePhotos.length - 1; i > 0; i -= 1) {
-	    j = Math.floor(Math.random() * (i + 1))
-	    temp = currentPosturePhotos[i]
-	    currentPosturePhotos[i] = currentPosturePhotos[j]
-	    currentPosturePhotos[j] = temp
+	for (i = currentPosturePhotos.length - 1; i > 0; i--) {
+	    j = Math.floor(Math.random() * (i + 1));
+	    temp = currentPosturePhotos[i];
+	    currentPosturePhotos[i] = currentPosturePhotos[j];
+	    currentPosturePhotos[j] = temp;
 	};
 
 	let imagesHTML = "";
-
 
 	currentPosturePhotos.forEach(function(photo) { 
 		// Skip over dissallowed photos
@@ -160,25 +165,18 @@ const updateBackgroundImages = function setBgImg() {
 } 
 
 // Find out what posture we're on and search flickr for it
-const triggerSearch = function triggerFlickrSearch() {
+const triggerSearch = () => {
 	const currentPostureId = getCurrentPosture(state);
 	const currentPostureString = getPostureString(state, currentPostureId);
 	searchFlickr(currentPostureString, processPhotos);
 }
 
-const getVinyasa = (index, arrayLength) => {
-	// We always want the last item in the array to return "SAMASTHITI" otherwise return the sanskrit number that corresponds to the index
-	if ( index === arrayLength -1 ) {
-		return 'SAMASTHITI';
-	}else{
-		return SANSKRIT_NUMBERS[index];
-	}
-}
-
 // Add current posture information to info in html
-const renderPostureInfo = () => {
+const renderLeftCol = () => {
 	const currentPostureId = getCurrentPosture(state);
-	const currentPostureObj = getPosture(state, currentPostureId);
+	const currentPosture = getPosture(state, currentPostureId);
+	const vinyasaCount = currentPosture.vinyasaCount;
+	const postureHeading = currentPosture.name + ' - ' + currentPosture.vinyasaCount + ' Vinyasa';
 
 	let infoHtml = $('.posture-info');
 
@@ -187,15 +185,32 @@ const renderPostureInfo = () => {
 	// Clear out current vinyasa instructions
 	infoHtml.find('.vinyasa').html('');
 
-	// ---- USE MAP HERE ---- // 
-	currentPostureObj.postureInfo.forEach(function(item, index) {
+	// Looping for vinyasaCount + 1 because we always want to add a 'samasthiti' at the end
+	for ( let i = 0; i <= vinyasaCount + 1 ; i++ ){
 		
-		const count = getVinyasa(index, currentPostureObj.postureInfo.length);
+		let currentVinyasa = 0;
+		let breath = '';
+		let plateCount = '';
 
-		// ${item}
+		// We always want the first and last item show "SAMASTHITI" otherwise show the sanskrit number that corresponds to the index
+		if ( i === vinyasaCount + 1 || i === 0 ) {
+			currentVinyasa = 'SAMASTHITI';
+			plateCount = 0;
+		} else {
+			currentVinyasa = SANSKRIT_NUMBERS[i];
+			plateCount = i;
+			
+			if (i % 2 === 0) {
+				breath = 'exhale';
+			} else {
+				breath = 'inhale';
+			}
+		}
 		
-		infoHtml.find('.vinyasa').append(`<li><img src="img/anna.png"><div class="vinyasa-info"><span>${count}</span></span>Inhale</span></div></li>`);
-	})
+		infoHtml.find('.vinyasa').append(`<li><span class="count-num">${plateCount}</span><img src="img/anna.png"><div class="vinyasa-info"><span>${currentVinyasa}</span></span>${breath}</span></div></li>`);
+	}
+
+	$('.js-posture-name').text(postureHeading);
 
 }
 
@@ -216,10 +231,15 @@ const populateHomePage = () => {
 	searchFlickr('pattabhi', processPhotos);
 }
 
+const goToTop = () => {
+	window.scrollTo(0, 0);
+}
+
+
 const loadFirstPosture = () => {
 	renderPosturePageClasses();
 	triggerSearch();
-	renderPostureInfo();
+	renderLeftCol();
 }
 
 const renderHomeClasses = () =>{
@@ -242,8 +262,9 @@ const nextPosture = () => {
 
     if (currentPosture < posturesArraylength) {
 		selectCurrentNavLink();
+		goToTop();
 		triggerSearch();
-		renderPostureInfo();
+		renderLeftCol();
     } else {
     	goHome();
     }
@@ -256,8 +277,9 @@ const prevPosture = () => {
 	if (currentPosture > 0){
 		updateCurentPostureCount(state, currentPosture - 1);
 		selectCurrentNavLink();
+		goToTop();
 		triggerSearch();
-		renderPostureInfo();
+		renderLeftCol();
 	}else{
 		goHome();
 	}
@@ -277,8 +299,9 @@ const goToPosture = function() {
 	renderPosturePageClasses();
 	updateCurentPostureCount(state, index);
 	selectCurrentNavLink();
+	goToTop();
 	triggerSearch();
-	renderPostureInfo();
+	renderLeftCol();
 }
 
 const renderNavLinks = () =>{
@@ -312,7 +335,6 @@ $(function() {
 	LOOK FOR WHERE I CAN USE MAP INSTEAD OF FOREACH
 	RESPONSIVE
 	CREATE LIGHTBOX
-	GIT RID OF QUEUES (USE COUNT AND BREATH)
 
 */
 

@@ -86,9 +86,16 @@ ul.vinyasa li{
 	border: 1px solid #fff;
 	cursor: pointer;
 	overflow: hidden;
-
-	/*/ use opacity: */
 	background: rgba(167, 219, 216, 0.5);
+}
+
+ul.vinyasa li .count-num{
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	color: #fff;
+	font-size: 16px;
+	z-index: 888;
 }
 
 ul.vinyasa li:hover img{
@@ -257,6 +264,7 @@ nav ul li a:hover{
 	width: 30%;
 	background: #f9f8f4;
 	padding: 20px 0;
+	z-index: 999;
 }
 
 .home, .posture-info{
