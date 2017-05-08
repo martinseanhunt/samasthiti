@@ -1,3 +1,6 @@
+// **** MAYBE STORE ALL OF THIS IN AN OBJECT? OR MOVE TO RELEVANT FUNCTIONS?
+// ___________  
+
 // FLICKR API INFO
 const BASE_URL = 'https://api.flickr.com/services/rest/?jsoncallback=';
 const API_KEY = '124b8d16a8cbdb38a9daa4eae472c89e';
@@ -7,28 +10,54 @@ const DISSALLOWED_PHOTOS = ['7294540910', '31367025712', '16365532406', '3136702
 
 // SANSKRIT NUMBERS 1 TO 17 FOR USE LATER **** IS THIS THE BEST PLACE FOR THESE? ****
 const SANSKRIT_NUMBERS =['SAMASTHITI', 'EKHAM', 'DVE', 'TRINI', 'CATVARI', 'PANCHA', 'SAT', 'SAPTA', 'ASTAU', 'NAVA', 'DASA', 'EKADASA', 'DVADASA', 'TRAYODASA', 'CHATURDASA', 'PANCADASA', 'SODASA', 'SAPTADASA'];
-const SANSKRIT_PRONUNCIATIONS =['sa-ma-stee-tee', 'A-kam', 'dway', 'tree-nee', 'chat-waaree', 'pan-cha', 'shat', 'sap-ta', 'ash-tau', 'na-va', 'day-sha', 'e-ka-da-sha', 'dwa-da-sha', 'try-yo-da-sha', 'chat-uhr-da-sha', 'pan-cha-da-sha', 'show-da-sha', 'sap-ta-da-sha'];
+const SANSKRIT_PRONUNCIATIONS =['sa-ma-stee-tee', 'A-kam', 'dway', 'tree-nee', 'chat-waar-ee', 'pan-cha', 'shat', 'sap-ta', 'ash-toe', 'na-va', 'day-sha', 'e-ka-da-sha', 'dva-da-sha', 'try-yo-da-sha', 'chat-uhr-da-sha', 'pan-cha-da-sha', 'show-da-sha', 'sap-ta-da-sha'];
+
+// ___________
+
+
+
+// TEMPLATES
+
+const PHOTO_TEMPLATE = `<div class="image" data-lightbox-img-url="">
+							<img src="" alt="">
+							<div class="img-data hidden">
+								<ul class="data-list">
+									<li><b>Photo By: </b> <a href=""></a></li>
+									<li><b>Taken: </b> <span class="js-taken"></span></li>
+									<li><b>Views: </b> <span class=""js-views"></span></li>
+								</ul>							
+							</div>
+						</div>`;
+
+// ___________
+
+
 
 // STATE
+
 let state = {
 	postures: [
 		{
 			name: 'Surya Namaskar A',
 			vinyasaCount: 9,
-			vinyasaPhotos: ['anna.png','anna.png','anna.png','anna.png','anna.png','anna.png','surya-a-sat.png','anna.png','anna.png','anna.png',],
+			vinyasaPhotos: ['surya-a-0.jpg','surya-a-1.jpg','surya-a-2.jpg','surya-a-3.jpg','surya-a-4.jpg','surya-a-5.jpg','surya-a-6.jpg','surya-a-3.jpg','surya-a-2.jpg','surya-a-1.jpg',],
 			search: 'samasthiti, surya+Namaskar+a, sun+salutation+a, Uttanasana, Ardha+Uttanasana, downward+facing+dog, aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh',
 			photos: [],
 		},
 		{
 			name: 'Surya Namaskar B',
 			vinyasaCount: 17,
-			vinyasaPhotos: ['anna.png','anna.png','anna.png','anna.png','anna.png','anna.png','surya-a-sat.png','anna.png','anna.png','anna.png','surya-a-sat.png','anna.png','anna.png','anna.png','surya-a-sat.png','anna.png','anna.png','anna.png',],
+			vinyasaPhotos: ['surya-a-0.jpg','surya-b-1.jpg','surya-a-2.jpg','surya-a-3.jpg','surya-a-4.jpg','surya-a-5.jpg','surya-a-6.jpg','surya-b-7.jpg','surya-a-4.jpg','surya-a-5.jpg' ,'surya-a-6.jpg','surya-b-11.jpg' ,'surya-a-4.jpg' ,'surya-a-5.jpg','surya-a-6.jpg', 'surya-a-3.jpg', 'surya-a-2.jpg', 'surya-b-1.jpg'],
 			search: 'samasthiti, surya+Namaskar+b, sun+salutation+b, Uttanasana, Ardha+Uttanasana, downward+facing+dog, aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh, virabhadrasana, virabhadrasanaa, virabhadrasana+a, warrior+1, warrior1',
 			photos: [],
 		}
 	],
 	currentPosture: 0,
 }
+
+
+
+// STATE FUNCTIONS 
 
 // Add photo array from flickr to state
 const addPhotos = (state, posture, photos) => {
@@ -42,25 +71,21 @@ const getCurrentPosture = (state) => {
 
 //Get all postures object from state
 const getAllPostures = (state) => {
-	// IS IT OK TO RETURN THE WHOLE POSTURES OBJECT HERE OR SHOULD I ONLY RETURN SPECIFIC THINGS FROM THE STATE, E.G. NAME
 	return state.postures;
 }
 
 //Get all postures array length
 const getPosturesArrayLength= (state) => {
-	// DO I NEED TO DO THIS OR CAN I JUST USE THE FUNCTION ABOVE AND CALL LENGTH ON WHAT IT RETURNS
 	return state.postures.length;
 }
 
 //Get a posture object from state
 const getPosture = (state, postureId) => {
-	// IS IT OK TO RETURN THE WHOLE POSTURE OBJECT HERE OR SHOULD I ONLY RETURN SPECIFIC THINGS FROM THE STATE, E.G. NAME
 	return state.postures[postureId];
 }
 
 //Get a posture object from state
 const getVinyasaCount = (state, postureId) => {
-	// IS IT OK TO RETURN THE WHOLE POSTURE OBJECT HERE OR SHOULD I ONLY RETURN SPECIFIC THINGS FROM THE STATE, E.G. NAME
 	return state.postures[postureId].vinyasaCount;
 }
 
@@ -70,7 +95,6 @@ const getVinyasaImage = (state, postureId, plateCount) => {
 
 //Get a posture object from state
 const getPostureString = (state, postureId) => {
-	// IS IT OK TO RETURN THE WHOLE POSTURE OBJECT HERE OR SHOULD I ONLY RETURN SPECIFIC THINGS FROM THE STATE, E.G. NAME
 	return state.postures[postureId].search;
 }
 
@@ -89,7 +113,12 @@ const resetCurentPostureCount = (state, count) => {
 	state.currentPosture = 0;
 }
 
-// Flickr json request
+// _________________
+
+
+
+// FLICKR API TRIGGERS, CALL AND CALLBACK
+
 const searchFlickr = (q, callBack) => { 
 	const query = {
 		method: 'flickr.photos.search',
@@ -97,21 +126,37 @@ const searchFlickr = (q, callBack) => {
 		api_key: API_KEY,
 		tags: q ,
 		nojsoncallback: '1',
-		extras: 'url_sq, url_t, url_s, url_q, url_m, url_n, url_z, url_c, url_l, url_o, date_upload, date_taken, owner_name, tags, views'
+		extras: 'url_t, url_s, url_q, url_m, url_n, url_z, date_taken, owner_name, views'
 	};
 	
 	$.getJSON(BASE_URL, query, callBack);
 }
 
-// Flickr callback for photo search
 const processPhotos = (data) => {
 	// Sending photos array to be added to state
 	const currentPostureId = getCurrentPosture(state);
 	addPhotos(state, currentPostureId, data.photos.photo);
 
 	// update the background image, needs to be triggered from here otherwise the photos might not have come back yet
-	updateBackgroundImages();
+	renderRightCol(state, '.background-images');
 }
+
+const triggerSearch = () => {
+	// Find out what posture we're on and search flickr for it
+	const currentPostureId = getCurrentPosture(state);
+	const currentPostureString = getPostureString(state, currentPostureId);
+	searchFlickr(currentPostureString, processPhotos);
+}
+
+const triggerHomeSearch = () => {
+	searchFlickr('pattabhi', processPhotos);
+}
+
+// _________________
+
+
+
+// HELPER FUNCTIONS
 
 const findBiggestImg = (photo) => {
 	// checks for available images to see which is the biggeset and returns it
@@ -130,9 +175,14 @@ const findBiggestImg = (photo) => {
 
 }
 
-// Set background image to current posture photos
-const updateBackgroundImages = () => {
-	// get original size image
+// _________________
+
+
+
+// RENDER FUNCTIONS
+
+const renderRightCol = (sate, htmlElement) => {
+	// get biggest usable image
 	const currentPostureId = getCurrentPosture(state);
 	const currentPosturePhotos = getPosturePhotos(state, currentPostureId);
 
@@ -148,37 +198,29 @@ const updateBackgroundImages = () => {
 	    currentPosturePhotos[j] = temp;
 	};
 
+	// Create array of item divs
 	const imagesHTML = currentPosturePhotos.map(function(photo) { 
 		// Skip over dissallowed photos
 		if ($.inArray(photo.id, DISSALLOWED_PHOTOS) === -1) { 
 			// finds the biggest available image
+			let template = $(PHOTO_TEMPLATE);
 			const biggestImg = findBiggestImg(photo);
-			return `<div class="image" data-lightbox-img-url="${biggestImg}">
-								<img src="${biggestImg}" alt="${photo.title}">
-								<div class="img-data hidden">
-									<ul class="data-list">
-										<li><b>Photo By: </b> <a href="https://www.flickr.com/people/${photo.owner}/">${photo.ownername}</a></li>
-										<li><b>Taken: </b> ${photo.datetaken}</li>
-										<li><b>id: </b> ${photo.id}</li>
-									</ul>							
-								</div>
-							</div>`;
+
+			template.find('.image').attr('data-lightbox-img-url', biggestImg);
+			template.find('img').attr('src', biggestImg).attr('alt', photo.title);
+			template.find('a').attr('href', `https://www.flickr.com/people/${photo.owner}/`).text(photo.ownername);
+			template.find('js-taken').text(photo.datetaken);
+			template.find('js-taken').text(photo.views);
+
+			return template;
 		}else{
 			return null;
 		}
 	});
 
-	$('.background-images').html(imagesHTML);
+	$(htmlElement).html(imagesHTML);
 } 
 
-// Find out what posture we're on and search flickr for it
-const triggerSearch = () => {
-	const currentPostureId = getCurrentPosture(state);
-	const currentPostureString = getPostureString(state, currentPostureId);
-	searchFlickr(currentPostureString, processPhotos);
-}
-
-// Add current posture information to info in html
 const renderLeftCol = () => {
 	const currentPostureId = getCurrentPosture(state);
 	const currentPosture = getPosture(state, currentPostureId);
@@ -217,6 +259,12 @@ const renderLeftCol = () => {
 		const vinyasaImage = getVinyasaImage(state, currentPostureId, plateCount);
 		const pronuncuation = SANSKRIT_PRONUNCIATIONS[plateCount];
 
+		// if it's a held posture show that instruction
+		let heldPosture = '';
+		if (currentPostureId === 0 && plateCount === 6 || currentPostureId === 1 && plateCount === 14) {
+			heldPosture = '<span class="held-posture">hold for 5 breaths</span>';
+		}
+
 		infoHtml.find('.vinyasa').append(
 			`<li>
 				<span class="count-num">${plateCount}</span>
@@ -224,14 +272,17 @@ const renderLeftCol = () => {
 				<div class="vinyasa-info">
 					<span class="vinyasa-count">${currentVinyasa}</span>
 					<span>${breath}</span>
+					${heldPosture}
 				</div>
 				<div class="pronuncuation hidden">
 					<span>${pronuncuation}</span>
 				</div>
 			</li>`
 		);
+
 	}
 
+	// Set H2 heading with posture name and vinyasa count
 	$('.js-posture-name').text(postureHeading);
 
 }
@@ -249,63 +300,11 @@ const renderPosturePageClasses = () => {
 	$('.js-nav-link-0').addClass('selected');
 }
 
-const populateHomePage = () => {
-	searchFlickr('pattabhi', processPhotos);
-}
-
-const goToTop = () => {
-	// **** THIS ISN'T WORKING.... WHAT DO? **** //
-	window.scrollTo(0, 0);
-}
-
-
-const loadFirstPosture = () => {
-	renderPosturePageClasses();
-	triggerSearch();
-	renderLeftCol();
-}
-
 const renderHomeClasses = () =>{
 	$('.home').removeClass('hidden');
 	$('.posture-info').addClass('hidden');
 	$('h1').addClass('selected');
 	$('.js-nav-link').removeClass('selected');
-}
-
-const goHome = () => {
-	renderHomeClasses();
-	resetCurentPostureCount(state);
-	populateHomePage();
-}
-
-const nextPosture = () => {
-	let currentPosture = getCurrentPosture(state);
-	const posturesArraylength = getPosturesArrayLength(state);
-    currentPosture = updateCurentPostureCount(state, currentPosture + 1);
-
-    if (currentPosture < posturesArraylength) {
-		selectCurrentNavLink();
-		goToTop();
-		triggerSearch();
-		renderLeftCol();
-    } else {
-    	goHome();
-    }
-    
-}
-
-const prevPosture = () => {
-	const currentPosture = getCurrentPosture(state);
-
-	if (currentPosture > 0){
-		updateCurentPostureCount(state, currentPosture - 1);
-		selectCurrentNavLink();
-		goToTop();
-		triggerSearch();
-		renderLeftCol();
-	}else{
-		goHome();
-	}
 }
 
 const showImageInfo = function() {
@@ -316,22 +315,10 @@ const hideImageInfo = function() {
 	$(this).find('.img-data').addClass('hidden');
 }
 
-const goToPosture = function() {
-	const postureId = Number($(this).attr('data-posture-id'));
-
-	renderPosturePageClasses();
-	updateCurentPostureCount(state, postureId);
-	selectCurrentNavLink();
-	goToTop();
-	triggerSearch();
-	renderLeftCol();
-}
-
 const showPronunciation = function() {
 	$(this).find('.vinyasa-info').toggleClass('hidden');
 	$(this).find('.pronuncuation').toggleClass('hidden');
 }
-
 
 const showLightbox = function() {
 	const postureId = getCurrentPosture(state);
@@ -342,6 +329,8 @@ const showLightbox = function() {
 
 	lightbox.removeClass('hidden');
 	lightbox.find('img').attr('src', imgUrl);
+
+	// write html template in global and use variable name as jquery selector to make a copy and modify.
 }
 
 const hideLightBox = (e) => {
@@ -361,9 +350,66 @@ const renderNavLinks = () => {
 	$('.js-main-nav').html(navHtml);
 }
 
+// _________________
+
+
+
+// LISTENER FUNCTIONS
+
+const goHome = () => {
+	renderHomeClasses();
+	resetCurentPostureCount(state);
+	triggerHomeSearch();
+}
+
+const loadFirstPosture = () => {
+	renderPosturePageClasses();
+	triggerSearch();
+	renderLeftCol();
+}
+
+const nextPosture = () => {
+	let currentPosture = getCurrentPosture(state);
+	const posturesArraylength = getPosturesArrayLength(state);
+    currentPosture = updateCurentPostureCount(state, currentPosture + 1);
+
+    if (currentPosture < posturesArraylength) {
+		selectCurrentNavLink();
+		triggerSearch();
+		renderLeftCol();
+    } else {
+    	goHome();
+    }
+    
+}
+
+const prevPosture = () => {
+	const currentPosture = getCurrentPosture(state);
+
+	if (currentPosture > 0){
+		updateCurentPostureCount(state, currentPosture - 1);
+		selectCurrentNavLink();
+		triggerSearch();
+		renderLeftCol();
+	}else{
+		goHome();
+	}
+}
+
+const goToPosture = function() {
+	const postureId = Number($(this).attr('data-posture-id'));
+
+	renderPosturePageClasses();
+	updateCurentPostureCount(state, postureId);
+	selectCurrentNavLink();
+	triggerSearch();
+	renderLeftCol();
+}
+
+
 $(function() {
 	renderNavLinks();
-	populateHomePage();
+	triggerHomeSearch();
 	$('.js-start').click(loadFirstPosture);
 	$('.js-home').click(goHome);
 	$('.js-next').click(nextPosture);
@@ -379,12 +425,11 @@ $(function() {
 
 /* TODO
 	
-	RESPONSIVE --- **** Why isn't the chrome responsive view working?
+	PASS RENDER FUNCTIONS STATE AND THE ELEMENT, ELEMENTS TO MODIFY
 
-	LOOK FOR WHERE I CAN USE MAP INSTEAD OF FOREACH
-	TIDY UP AND RE ARRANGE FUNCTIONS
+	MAKE SURE FUNCTIONS THAT MODIFY THE DOM, DO IT AS LITTLE AS POSSIBLE - USE TEMPLATES
+
 	TIDY UP CSS
-	TIDY UP HTML
 
 */
 

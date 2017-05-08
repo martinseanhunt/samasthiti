@@ -1,5 +1,9 @@
-*{
-	box-sizing: border-box;
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 body,html{
@@ -15,6 +19,8 @@ body{
 	font-size: 12px;
 	font-weight: light;
 	line-height: 16px;
+	padding-top: 215px;
+	margin-bottom: 59px;
 }
 
 .leftcol{
@@ -24,13 +30,14 @@ body{
 	background: #f9f8f4;
 	height: 100%;
 	font-weight: 300;
+	overflow: scroll;
 }
 
-.leftcol, .leftcol header, .leftcol .buttons{
+.leftcol, header, .buttons{
 	width: 70%;
 }
 
-.leftcol header{
+header{
 	background: #f9f8f4;
 	text-align: center;
 	position: fixed;
@@ -39,38 +46,36 @@ body{
 	z-index: 999;
 }
 
-.leftcol header h1{
+h1{
 	font-size: 80px;
 	margin: 20px 0;
 	font-family: 'Quicksand', sans-serif;
 }
 
-.leftcol header h1 span{
+h1 span{
 	display: block;
 	font-size: 14px;
 	position: relative;
 	top: -10px;
 }
 
-.leftcol header h1 a, .leftcol header h1.selected a:hover{
+h1 a, h1.selected a:hover{
 	text-decoration: none;
 	color: #141414;
 }
 
-.leftcol header h1.selected a, .leftcol header h1 a:hover{ 
+h1.selected a, h1 a:hover{ 
 	color: #A7DBD8;
 }
 
-.leftcol h2{
+h2{
 	font-size: 12px;
 	text-transform: uppercase;
 	margin: 20px 0 10px 0;
 	color: #A7DBD8;
 }
 
-
-
-ul.vinyasa{
+.vinyasa{
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -79,8 +84,7 @@ ul.vinyasa{
 	font-size: 0;
 }
 
-
-ul.vinyasa li{
+.vinyasa li{
 	display: inline-block;
 	width: 100%;
 	position: relative;
@@ -90,7 +94,7 @@ ul.vinyasa li{
 	background: rgba(167, 219, 216, 0.5);
 }
 
-ul.vinyasa li .count-num{
+.vinyasa li .count-num{
 	position: absolute;
 	top: 5px;
 	left: 5px;
@@ -100,12 +104,12 @@ ul.vinyasa li .count-num{
 }
 
 
-ul.vinyasa li:hover img{
+.vinyasa li:hover img{
 	opacity: 1;
 	-webkit-filter: blur(0);
 }
 
-ul.vinyasa li .vinyasa-info, ul.vinyasa li .pronuncuation{
+.vinyasa li .vinyasa-info, .vinyasa li .pronuncuation{
 	position: absolute;
     top: 50%;
     left: 50%;
@@ -116,23 +120,26 @@ ul.vinyasa li .vinyasa-info, ul.vinyasa li .pronuncuation{
 	line-height: 24px;
 }
 
-ul.vinyasa li .vinyasa-info span{
+.vinyasa li .vinyasa-info span{
 	display: block;
 	color: #fff;
 }
 
-ul.vinyasa li .vinyasa-info span.vinyasa-count{
+.vinyasa li .vinyasa-info span.vinyasa-count{
 	font-weight: 700;
 }
 
-ul.vinyasa li img{
+.vinyasa li .vinyasa-info span.held-posture{
+	font-size: 11px;
+	font-weight: 400;
+}
+
+.vinyasa li img{
 	width: 100%;
 	opacity: 0.3;
 	display: block;
 	-webkit-filter: blur(1px);
 }
-
-
 
 nav ul{
 	list-style: none;
@@ -164,7 +171,6 @@ nav ul li a:hover{
 	background: #141414;
 	color: #f9f8f4;
 }
-
 
 .rightcol{
 	width: 30%;
@@ -227,7 +233,6 @@ nav ul li a:hover{
 
 .buttons{
 	text-align: center;
-	width: 100%;
 }
 
 .button{
@@ -245,14 +250,6 @@ nav ul li a:hover{
 	margin-right: 2%;
 }
 
-.button:hover{
-	background: #141414;
-}
-
-.leftcol{
-	overflow: scroll;
-}
-
 .buttons{
 	position: fixed;
 	bottom: 0;
@@ -263,9 +260,8 @@ nav ul li a:hover{
 	font-size: 0;
 }
 
-.home, .posture-info{
-	margin-top: 215px;
-	margin-bottom: 59px;
+.button:hover{
+	background: #141414;
 }
 
 
@@ -304,18 +300,20 @@ nav ul li a:hover{
 }
 
 
+
+
 @media only screen and (min-width: 510px) {
-	ul.vinyasa li{
+	.vinyasa li{
 		width: 49%;
 	}
 
-	ul.vinyasa li:nth-child(even){
+	.vinyasa li:nth-child(even){
 		margin-left: 2%;
 	}
 }
 
 @media only screen and (min-width: 723px) {
-	.leftcol, .leftcol header, .leftcol .buttons{
+	.leftcol, header, .buttons{
 		width: 50%;
   	}
   	.rightcol{
@@ -331,7 +329,7 @@ nav ul li a:hover{
 }
 
 @media only screen and (min-width: 863px) {
-	.leftcol, .leftcol header, .leftcol .buttons{
+	.leftcol, header, .buttons{
 		width: 40%;
   	}
   	.rightcol{
@@ -347,7 +345,7 @@ nav ul li a:hover{
 }
 
 @media only screen and (min-width: 1159px) {
-	.leftcol, .leftcol header, .leftcol .buttons{
+	.leftcol, header, .buttons{
 		width: 30%;
   	}
   	.rightcol{
