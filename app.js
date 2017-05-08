@@ -24,7 +24,7 @@ const PHOTO_TEMPLATE = `<div class="image" data-lightbox-img-url="">
 								<ul class="data-list">
 									<li><b>Photo By: </b> <a href=""></a></li>
 									<li><b>Taken: </b> <span class="js-taken"></span></li>
-									<li><b>Views: </b> <span class=""js-views"></span></li>
+									<li><b>Views: </b> <span class="js-views"></span></li>
 								</ul>							
 							</div>
 						</div>`;
@@ -209,8 +209,8 @@ const renderRightCol = (sate, htmlElement) => {
 			template.find('.image').attr('data-lightbox-img-url', biggestImg);
 			template.find('img').attr('src', biggestImg).attr('alt', photo.title);
 			template.find('a').attr('href', `https://www.flickr.com/people/${photo.owner}/`).text(photo.ownername);
-			template.find('js-taken').text(photo.datetaken);
-			template.find('js-taken').text(photo.views);
+			template.find('.js-taken').text(photo.datetaken);
+			template.find('.js-views').text(photo.views);
 
 			return template;
 		}else{
