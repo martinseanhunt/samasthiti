@@ -446,18 +446,3 @@ $(function() {
 	$('.lightbox').click( hideLightBox );
 	$(document).keyup( hideLightBox );
 });
-
-/* TODO
-	
-	PASS RENDER FUNCTIONS STATE AND THE ELEMENT, ELEMENTS TO MODIFY
-
-	MAKE SURE FUNCTIONS THAT MODIFY THE DOM, DO IT AS LITTLE AS POSSIBLE - USE TEMPLATES
-
-*/
-
-/* IDEAS TO IMPROVE
-
-	Build functionality to exclude ceratin tags from unique posture results - flickr functionality broken
-	Loading animation / icon for images
-
-*/
