@@ -6,11 +6,18 @@ const BASE_URL = 'https://api.flickr.com/services/rest/?jsoncallback=';
 const API_KEY = '124b8d16a8cbdb38a9daa4eae472c89e';
 
 // INNAPPROPRIATE PHOTOS TO EXCLUDE
-const DISSALLOWED_PHOTOS = ['7294540910', '31367025712', '16365532406', '31367026172', '31367026382', '31142632900', '26523692991', '26563577466', '26523692941', '26316572830', '25984495244', '26497118422'];
+const DISSALLOWED_PHOTOS = ['7294540910', '31367025712', '16365532406', '31367026172', 
+							'31367026382', '31142632900', '26523692991', '26563577466', 
+							'26523692941', '26316572830', '25984495244', '26497118422'];
 
 // SANSKRIT NUMBERS 1 TO 17 FOR USE LATER **** IS THIS THE BEST PLACE FOR THESE? ****
-const SANSKRIT_NUMBERS =['SAMASTHITI', 'EKHAM', 'DVE', 'TRINI', 'CATVARI', 'PANCHA', 'SAT', 'SAPTA', 'ASTAU', 'NAVA', 'DASA', 'EKADASA', 'DVADASA', 'TRAYODASA', 'CHATURDASA', 'PANCADASA', 'SODASA', 'SAPTADASA'];
-const SANSKRIT_PRONUNCIATIONS =['sa-ma-stee-tee', 'A-kam', 'dway', 'tree-nee', 'chat-waar-ee', 'pan-cha', 'shat', 'sap-ta', 'ash-toe', 'na-va', 'day-sha', 'e-ka-da-sha', 'dva-da-sha', 'try-yo-da-sha', 'chat-uhr-da-sha', 'pan-cha-da-sha', 'show-da-sha', 'sap-ta-da-sha'];
+const SANSKRIT_NUMBERS = ['SAMASTHITI', 'EKHAM', 'DVE', 'TRINI', 'CATVARI', 'PANCHA', 
+							'SAT', 'SAPTA', 'ASTAU', 'NAVA', 'DASA', 'EKADASA', 'DVADASA', 
+							'TRAYODASA', 'CHATURDASA', 'PANCADASA', 'SODASA', 'SAPTADASA'];
+const SANSKRIT_PRONUNCIATIONS = ['sa-ma-stee-tee', 'A-kam', 'dway', 'tree-nee', 'chat-waar-ee', 
+								'pan-cha', 'shat', 'sap-ta', 'ash-toe', 'na-va', 'day-sha', 
+								'e-ka-da-sha', 'dva-da-sha', 'try-yo-da-sha', 'chat-uhr-da-sha', 
+								'pan-cha-da-sha', 'show-da-sha', 'sap-ta-da-sha'];
 
 // ___________
 
@@ -29,6 +36,21 @@ const PHOTO_TEMPLATE = `<div class="image" data-lightbox-img-url="">
 							</div>
 						</div>`;
 
+const PLATE_TEMPLATE = `<li>
+							<span class="count-num"></span>
+							<img src="" alt="">
+							<div class="vinyasa-info">
+								<span class="vinyasa-count"></span>
+								<span class="breath"></span>
+								<span class="held-posture hidden">hold for 5 breaths</span>
+							</div>
+							<div class="pronunciation hidden">
+								<span class="pronunciation-span"></span>
+							</div>
+						</li>`
+
+
+
 // ___________
 
 
@@ -40,15 +62,23 @@ let state = {
 		{
 			name: 'Surya Namaskar A',
 			vinyasaCount: 9,
-			vinyasaPhotos: ['surya-a-0.jpg','surya-a-1.jpg','surya-a-2.jpg','surya-a-3.jpg','surya-a-4.jpg','surya-a-5.jpg','surya-a-6.jpg','surya-a-3.jpg','surya-a-2.jpg','surya-a-1.jpg',],
-			search: 'samasthiti, surya+Namaskar+a, sun+salutation+a, Uttanasana, Ardha+Uttanasana, downward+facing+dog, aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh',
+			vinyasaPhotos: ['surya-a-0.jpg','surya-a-1.jpg','surya-a-2.jpg','surya-a-3.jpg',
+							'surya-a-4.jpg','surya-a-5.jpg','surya-a-6.jpg','surya-a-3.jpg',
+							'surya-a-2.jpg','surya-a-1.jpg',],
+			search: `samasthiti, surya+Namaskar+a, sun+salutation+a, Uttanasana, Ardha+Uttanasana, 
+					downward+facing+dog, aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh`,
 			photos: [],
 		},
 		{
 			name: 'Surya Namaskar B',
 			vinyasaCount: 17,
-			vinyasaPhotos: ['surya-a-0.jpg','surya-b-1.jpg','surya-a-2.jpg','surya-a-3.jpg','surya-a-4.jpg','surya-a-5.jpg','surya-a-6.jpg','surya-b-7.jpg','surya-a-4.jpg','surya-a-5.jpg' ,'surya-a-6.jpg','surya-b-11.jpg' ,'surya-a-4.jpg' ,'surya-a-5.jpg','surya-a-6.jpg', 'surya-a-3.jpg', 'surya-a-2.jpg', 'surya-b-1.jpg'],
-			search: 'samasthiti, surya+Namaskar+b, sun+salutation+b, Uttanasana, Ardha+Uttanasana, downward+facing+dog, aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh, virabhadrasana, virabhadrasanaa, virabhadrasana+a, warrior+1, warrior1',
+			vinyasaPhotos: ['surya-a-0.jpg','surya-b-1.jpg','surya-a-2.jpg','surya-a-3.jpg','surya-a-4.jpg',
+							'surya-a-5.jpg','surya-a-6.jpg','surya-b-7.jpg','surya-a-4.jpg','surya-a-5.jpg' ,
+							'surya-a-6.jpg','surya-b-11.jpg' ,'surya-a-4.jpg' ,'surya-a-5.jpg','surya-a-6.jpg', 
+							'surya-a-3.jpg', 'surya-a-2.jpg', 'surya-b-1.jpg'],
+			search: `samasthiti, surya+Namaskar+b, sun+salutation+b, Uttanasana, Ardha+Uttanasana, downward+facing+dog, 
+					aradho+mukha+svanasanadh, upward+facing+dog, urdhva+mukha+svanasanadh, virabhadrasana, 
+					virabhadrasanaa, virabhadrasana+a, warrior+1, warrior1`,
 			photos: [],
 		}
 	],
@@ -65,17 +95,17 @@ const addPhotos = (state, posture, photos) => {
 }
 
 // Return current posture which is the key for the object of the posture we're on 
-const getCurrentPosture = (state) => {
+const getCurrentPosture = state => {
 	return state.currentPosture;
 }
 
 //Get all postures object from state
-const getAllPostures = (state) => {
+const getAllPostures = state => {
 	return state.postures;
 }
 
 //Get all postures array length
-const getPosturesArrayLength= (state) => {
+const getPosturesArrayLength= state => {
 	return state.postures.length;
 }
 
@@ -206,7 +236,7 @@ const renderRightCol = (sate, htmlElement) => {
 			let template = $(PHOTO_TEMPLATE);
 			const biggestImg = findBiggestImg(photo);
 
-			template.find('.image').attr('data-lightbox-img-url', biggestImg);
+			template.attr('data-lightbox-img-url', biggestImg);
 			template.find('img').attr('src', biggestImg).attr('alt', photo.title);
 			template.find('a').attr('href', `https://www.flickr.com/people/${photo.owner}/`).text(photo.ownername);
 			template.find('.js-taken').text(photo.datetaken);
@@ -221,15 +251,13 @@ const renderRightCol = (sate, htmlElement) => {
 	$(htmlElement).html(imagesHTML);
 } 
 
-const renderLeftCol = () => {
+const renderLeftCol = (state, htmlElement) => {
 	const currentPostureId = getCurrentPosture(state);
 	const currentPosture = getPosture(state, currentPostureId);
 	const vinyasaCount = currentPosture.vinyasaCount;
 	const postureHeading = currentPosture.name + ' - ' + currentPosture.vinyasaCount + ' Vinyasa';
 
-	let infoHtml = $('.posture-info');
-
-	// **** WHY IS THIS CHANGING THE DOM DIRECTLY WITHOUT HAVING TO CALL .HTML LIKE WE DID ON THE OTHER EXAMPLE ****
+	let infoHtml = $(htmlElement).clone();
 
 	// Clear out current vinyasa instructions
 	infoHtml.find('.vinyasa').html('');
@@ -257,34 +285,30 @@ const renderLeftCol = () => {
 		}
 
 		const vinyasaImage = getVinyasaImage(state, currentPostureId, plateCount);
-		const pronuncuation = SANSKRIT_PRONUNCIATIONS[plateCount];
+		const pronunciation = SANSKRIT_PRONUNCIATIONS[plateCount];
+
+		let vinyasaHtml = $(PLATE_TEMPLATE);
+
+		vinyasaHtml.find('.count-num').text(plateCount);
+		vinyasaHtml.find('img').attr('src', `img/${vinyasaImage}`).attr('alt', currentVinyasa);
+		vinyasaHtml.find('.vinyasa-count').text(currentVinyasa);
+		vinyasaHtml.find('.breath').text(breath);
 
 		// if it's a held posture show that instruction
-		let heldPosture = '';
 		if (currentPostureId === 0 && plateCount === 6 || currentPostureId === 1 && plateCount === 14) {
-			heldPosture = '<span class="held-posture">hold for 5 breaths</span>';
+			vinyasaHtml.find('.held-posture').removeClass('hidden');
 		}
 
-		infoHtml.find('.vinyasa').append(
-			`<li>
-				<span class="count-num">${plateCount}</span>
-				<img src="img/${vinyasaImage}" alt="${currentVinyasa}">
-				<div class="vinyasa-info">
-					<span class="vinyasa-count">${currentVinyasa}</span>
-					<span>${breath}</span>
-					${heldPosture}
-				</div>
-				<div class="pronuncuation hidden">
-					<span>${pronuncuation}</span>
-				</div>
-			</li>`
-		);
+		vinyasaHtml.find('.pronunciation-span').text(pronunciation);
+
+		infoHtml.find('.vinyasa').append(vinyasaHtml);
 
 	}
 
 	// Set H2 heading with posture name and vinyasa count
-	$('.js-posture-name').text(postureHeading);
+	infoHtml.find('.js-posture-name').text(postureHeading);
 
+	$(htmlElement).replaceWith(infoHtml);
 }
 
 const selectCurrentNavLink = () =>{
@@ -317,7 +341,7 @@ const hideImageInfo = function() {
 
 const showPronunciation = function() {
 	$(this).find('.vinyasa-info').toggleClass('hidden');
-	$(this).find('.pronuncuation').toggleClass('hidden');
+	$(this).find('.pronunciation').toggleClass('hidden');
 }
 
 const showLightbox = function() {
@@ -365,7 +389,7 @@ const goHome = () => {
 const loadFirstPosture = () => {
 	renderPosturePageClasses();
 	triggerSearch();
-	renderLeftCol();
+	renderLeftCol(state, '.js-vinyasa-content');
 }
 
 const nextPosture = () => {
@@ -376,7 +400,7 @@ const nextPosture = () => {
     if (currentPosture < posturesArraylength) {
 		selectCurrentNavLink();
 		triggerSearch();
-		renderLeftCol();
+		renderLeftCol(state, '.js-vinyasa-content');
     } else {
     	goHome();
     }
@@ -390,7 +414,7 @@ const prevPosture = () => {
 		updateCurentPostureCount(state, currentPosture - 1);
 		selectCurrentNavLink();
 		triggerSearch();
-		renderLeftCol();
+		renderLeftCol(state, '.js-vinyasa-content');
 	}else{
 		goHome();
 	}
@@ -403,7 +427,7 @@ const goToPosture = function() {
 	updateCurentPostureCount(state, postureId);
 	selectCurrentNavLink();
 	triggerSearch();
-	renderLeftCol();
+	renderLeftCol(state, '.js-vinyasa-content');
 }
 
 
@@ -415,12 +439,12 @@ $(function() {
 	$('.js-next').click(nextPosture);
 	$('.js-prev').click(prevPosture);
 	$('.js-nav-link').click(goToPosture);
-	$('.vinyasa').on('click', 'li', showPronunciation);
+	$('.posture-page').on('click', '.vinyasa li', showPronunciation);
 	$('.background-images').on('mouseenter', '.image', showImageInfo);
 	$('.background-images').on('mouseleave', '.image', hideImageInfo);
 	$('.background-images').on('click', '.image', showLightbox);
-	$('.lightbox').click( function(e){ hideLightBox(e) } );
-	$(document).keyup(function(e) { hideLightBox(e); });
+	$('.lightbox').click( hideLightBox );
+	$(document).keyup( hideLightBox );
 });
 
 /* TODO
@@ -429,14 +453,11 @@ $(function() {
 
 	MAKE SURE FUNCTIONS THAT MODIFY THE DOM, DO IT AS LITTLE AS POSSIBLE - USE TEMPLATES
 
-	TIDY UP CSS
-
 */
 
 /* IDEAS TO IMPROVE
 
 	Build functionality to exclude ceratin tags from unique posture results - flickr functionality broken
 	Loading animation / icon for images
-	change list of cues to boxes with breath and count background is picture of Anna, show cue on click
 
 */
