@@ -136,7 +136,7 @@ const updateBackgroundImages = () => {
 	const currentPostureId = getCurrentPosture(state);
 	const currentPosturePhotos = getPosturePhotos(state, currentPostureId);
 
-	// Shuffle array to randomize photo order  REDO THIS IN OWN STYLE
+	// Shuffle array to randomize photo order
 	let i = 0;
 	let j = 0;
 	let temp = null;
@@ -148,14 +148,12 @@ const updateBackgroundImages = () => {
 	    currentPosturePhotos[j] = temp;
 	};
 
-	let imagesHTML = "";
-
-	currentPosturePhotos.forEach(function(photo) { 
+	const imagesHTML = currentPosturePhotos.map(function(photo) { 
 		// Skip over dissallowed photos
 		if ($.inArray(photo.id, DISSALLOWED_PHOTOS) === -1) { 
 			// finds the biggest available image
 			const biggestImg = findBiggestImg(photo);
-			imagesHTML += `<div class="image" data-lightbox-img-url="${biggestImg}">
+			return `<div class="image" data-lightbox-img-url="${biggestImg}">
 								<img src="${biggestImg}" alt="${photo.title}">
 								<div class="img-data hidden">
 									<ul class="data-list">
@@ -165,6 +163,8 @@ const updateBackgroundImages = () => {
 									</ul>							
 								</div>
 							</div>`;
+		}else{
+			return null;
 		}
 	});
 
@@ -328,7 +328,6 @@ const goToPosture = function() {
 }
 
 const showPronunciation = function() {
-	console.log('this');
 	$(this).find('.vinyasa-info').toggleClass('hidden');
 	$(this).find('.pronuncuation').toggleClass('hidden');
 }
@@ -354,10 +353,9 @@ const hideLightBox = (e) => {
 
 const renderNavLinks = () => {
 	const postures = getAllPostures(state);
-	let navHtml = "";
-	// USE MAP
-	postures.forEach(function(posture, index) {
-		navHtml += `<li><a href="#" class="js-nav-link js-nav-link-${index}" data-posture-id="${index}">${posture.name}</a></li>`;
+	
+	const navHtml = postures.map(function(posture, index) {
+		return `<li><a href="#" class="js-nav-link js-nav-link-${index}" data-posture-id="${index}">${posture.name}</a></li>`;
 	});
 
 	$('.js-main-nav').html(navHtml);
@@ -381,7 +379,8 @@ $(function() {
 
 /* TODO
 	
-	RESPONSIVE
+	RESPONSIVE --- **** Why isn't the chrome responsive view working?
+
 	LOOK FOR WHERE I CAN USE MAP INSTEAD OF FOREACH
 	TIDY UP AND RE ARRANGE FUNCTIONS
 	TIDY UP CSS

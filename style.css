@@ -18,7 +18,6 @@ body{
 }
 
 .leftcol{
-	width: 30%;
 	position: fixed; 
 	top: 0;
 	left: 0;
@@ -27,9 +26,17 @@ body{
 	font-weight: 300;
 }
 
+.leftcol, .leftcol header, .leftcol .buttons{
+	width: 70%;
+}
+
 .leftcol header{
 	background: #f9f8f4;
 	text-align: center;
+	position: fixed;
+	top: 0;
+	left: 0; 
+	z-index: 999;
 }
 
 .leftcol header h1{
@@ -91,6 +98,7 @@ ul.vinyasa li .count-num{
 	font-size: 16px;
 	z-index: 888;
 }
+
 
 ul.vinyasa li:hover img{
 	opacity: 1;
@@ -159,7 +167,7 @@ nav ul li a:hover{
 
 
 .rightcol{
-	width: 70%;
+	width: 30%;
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -170,11 +178,11 @@ nav ul li a:hover{
   /* Prevent vertical gaps */
   line-height: 0;
    
-  -webkit-column-count: 4;
+  -webkit-column-count: 1;
   -webkit-column-gap:   0px;
-  -moz-column-count:    4;
+  -moz-column-count:    1;
   -moz-column-gap:      0px;
-  column-count:         4;
+  column-count:         1;
   column-gap:           0px;  
 }
 
@@ -245,19 +253,10 @@ nav ul li a:hover{
 	overflow: scroll;
 }
 
-.leftcol header{
-	position: fixed;
-	top: 0;
-	left: 0; 
-	width: 30%;
-	z-index: 999;
-}
-
 .buttons{
 	position: fixed;
 	bottom: 0;
 	left: 0;
-	width: 30%;
 	background: #f9f8f4;
 	padding: 20px;
 	z-index: 999;
@@ -305,22 +304,60 @@ nav ul li a:hover{
 }
 
 
-@media only screen and (min-width: 640px) {
+@media only screen and (min-width: 510px) {
+	ul.vinyasa li{
+		width: 49%;
+	}
 
+	ul.vinyasa li:nth-child(even){
+		margin-left: 2%;
+	}
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 723px) {
+	.leftcol, .leftcol header, .leftcol .buttons{
+		width: 50%;
+  	}
+  	.rightcol{
+		width: 50%;
+	}
+  	.background-images {
+	  	-webkit-column-count: 2;
+		-webkit-column-gap:   0px;
+		-moz-column-count:    2;
+		-moz-column-gap:      0px;
+		column-count:         2;
+	}
+}
 
-  
+@media only screen and (min-width: 863px) {
+	.leftcol, .leftcol header, .leftcol .buttons{
+		width: 40%;
+  	}
+  	.rightcol{
+		width: 60%;
+	}
+  	.background-images {
+	  	-webkit-column-count: 3;
+		-webkit-column-gap:   0px;
+		-moz-column-count:    3;
+		-moz-column-gap:      0px;
+		column-count:         3;
+	}
 }
 
 @media only screen and (min-width: 1159px) {
-	ul.vinyasa li{
-		display: inline-block;
-		width: 49%;
- 	}
-
- 	ul.vinyasa li:nth-child(even){
-	margin-left: 2%;
-}
+	.leftcol, .leftcol header, .leftcol .buttons{
+		width: 30%;
+  	}
+  	.rightcol{
+		width: 70%;
+	}
+  	.background-images {
+	  	-webkit-column-count: 4;
+		-webkit-column-gap:   0px;
+		-moz-column-count:    4;
+		-moz-column-gap:      0px;
+		column-count:         4;
+	}
 }
