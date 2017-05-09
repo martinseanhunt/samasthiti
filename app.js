@@ -311,7 +311,7 @@ const renderLeftCol = (state, htmlElement) => {
 	$(htmlElement).replaceWith(infoHtml);
 }
 
-const selectCurrentNavLink = () =>{
+const selectCurrentNavLink = () => {
 	currentPostureIndex = getCurrentPosture(state);
 	$('.js-nav-link').removeClass('selected');
 	$(`.js-nav-link-${currentPostureIndex}`).addClass('selected');
@@ -324,7 +324,7 @@ const renderPosturePageClasses = () => {
 	$('.js-nav-link-0').addClass('selected');
 }
 
-const renderHomeClasses = () =>{
+const renderHomeClasses = () => {
 	$('.home').removeClass('hidden');
 	$('.posture-info').addClass('hidden');
 	$('h1').addClass('selected');
